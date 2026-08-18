@@ -1,0 +1,18 @@
+[project]
+name = "multi-agent-coding-workflow"
+version = "0.1.0"
+description = "A LangChain and LangGraph multi-agent coding workflow."
+requires-python = ">=3.11"
+
+dependencies = [
+    "langchain",
+    "langchain-openai",
+    "langgraph",
+    "pydantic",
+    "python-dotenv",
+]
+
+[tool.pytest.ini_options]
+pythonpath = [
+    "."
+]
