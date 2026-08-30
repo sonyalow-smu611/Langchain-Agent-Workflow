@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from src.agents.base import get_llm
-from src.schemas.architecture import BlueprintSpec
-from src.schemas.contracts import APIContract, SchemaSpec
+from vibecoder.src.agents.base import get_llm
+from vibecoder.src.schemas.architecture import BlueprintSpec
+from vibecoder.src.schemas.contracts import APIContract, SchemaSpec
 
 
 def run_architect(

@@ -1,10 +1,10 @@
 from typing import TypedDict
 
-from src.schemas.product import ProductSpec
-from src.schemas.architecture import BlueprintSpec
-from src.schemas.contracts import APIContract, SchemaSpec
-from src.schemas.tasks import TaskGraph
-from src.schemas.testing import TestReport, RepairTicket
+from vibecoder.src.schemas.product import ProductSpec
+from vibecoder.src.schemas.architecture import BlueprintSpec
+from vibecoder.src.schemas.contracts import APIContract, SchemaSpec
+from vibecoder.src.schemas.tasks import TaskGraph
+from vibecoder.src.schemas.testing import TestReport, RepairTicket
 
 
 class WorkflowState(TypedDict, total=False):

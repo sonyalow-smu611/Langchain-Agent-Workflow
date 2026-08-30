@@ -4,8 +4,8 @@ from langgraph.graph import (
     END
 )
 
-from src.graph.state import WorkflowState
-from src.graph.nodes import (
+from vibecoder.src.graph.state import WorkflowState
+from vibecoder.src.graph.nodes import (
     director_node,
     architect_node
 )

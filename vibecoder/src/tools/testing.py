@@ -1,6 +1,6 @@
 import subprocess
 
-from src.schemas.testing import TestReport, TestFailure
+from vibecoder.src.schemas.testing import TestReport, TestFailure
 
 
 def run_tests() -> TestReport:

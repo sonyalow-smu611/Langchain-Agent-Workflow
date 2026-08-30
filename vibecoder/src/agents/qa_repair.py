@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from src.agents.base import get_llm
-from src.schemas.testing import RepairTicket
+from vibecoder.src.agents.base import get_llm
+from vibecoder.src.schemas.testing import RepairTicket
 
 
 def run_qa(test_report):

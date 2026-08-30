@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from src.tools.filesystem import PROJECT_ROOT
+from vibecoder.src.tools.filesystem import PROJECT_ROOT
 
 
 def search_code(query: str) -> list[dict]:

@@ -1,5 +1,5 @@
-from src.agents.director import run_director
-from src.agents.architect import run_architect
+from vibecoder.src.agents.director import run_director
+from vibecoder.src.agents.architect import run_architect
 
 
 def director_node(state):

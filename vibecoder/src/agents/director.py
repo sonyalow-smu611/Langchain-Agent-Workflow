@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from src.agents.base import get_llm
-from src.schemas.product import ProductSpec
-from src.schemas.tasks import TaskGraph
+from vibecoder.src.agents.base import get_llm
+from vibecoder.src.schemas.product import ProductSpec
+from vibecoder.src.schemas.tasks import TaskGraph
 
 
 def build_director():

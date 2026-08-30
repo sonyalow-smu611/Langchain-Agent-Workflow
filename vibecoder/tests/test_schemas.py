@@ -1,4 +1,4 @@
-from src.schemas.product import ProductSpec
+from vibecoder.src.schemas.product import ProductSpec
 
 
 def test_product_spec():

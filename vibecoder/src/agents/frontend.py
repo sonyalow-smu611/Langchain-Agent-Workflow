@@ -1,19 +1,18 @@
 from pathlib import Path
 
-from src.agents.base import get_llm
+from vibecoder.src.agents.base import get_llm
 
 
-def run_backend_worker(
+def run_frontend_worker(
     task,
     api_contract,
-    schema,
     architecture
 ):
 
     llm = get_llm()
 
     prompt = Path(
-        "src/prompts/backend.md"
+        "src/prompts/frontend.md"
     ).read_text()
 
     response = llm.invoke([
@@ -27,13 +26,10 @@ def run_backend_worker(
             API Contract:
             {api_contract.model_dump_json()}
 
-            Database Schema:
-            {schema.model_dump_json()}
-
             Architecture:
             {architecture.model_dump_json()}
 
-            Implement the assigned backend work.
+            Implement the assigned frontend work.
             Return the proposed file changes.
             """
         )
