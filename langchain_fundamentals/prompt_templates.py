@@ -1,8 +1,22 @@
+"""
+The smallest possible LangChain example: build a ChatPromptTemplate with
+variables, fill it in two different ways, and send it to the model.
+
+Run: `python prompt_templates.py` (needs OPENAI_API_KEY in the shared
+     repo-root .env).
+
+Learn: ChatPromptTemplate.from_template() vs .from_messages(), and the
+difference between calling .invoke() on a template (fills in the blanks) vs
+on a model (sends the filled prompt to the LLM).
+"""
+
+from pathlib import Path
+
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
 from langchain_core.prompts import ChatPromptTemplate
 
-load_dotenv()
+load_dotenv(Path(__file__).resolve().parents[1] / ".env")
 
 llm = ChatOpenAI(model="gpt-4")
 

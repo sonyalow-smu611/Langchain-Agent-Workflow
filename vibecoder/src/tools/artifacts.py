@@ -1,3 +1,14 @@
+"""
+Save/load arbitrary JSON blobs to artifacts/<name>.json — a simple way for
+agents to persist intermediate results to disk.
+
+Run: not run directly — imported wherever an agent wants to checkpoint
+     output (e.g. saving a BlueprintSpec so a later step can reload it).
+
+Learn: the save/load-to-disk pattern as the simplest possible alternative to
+a database or LangGraph checkpointer for persisting agent output.
+"""
+
 import json
 from pathlib import Path
 

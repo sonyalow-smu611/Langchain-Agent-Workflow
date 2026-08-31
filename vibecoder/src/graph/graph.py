@@ -1,3 +1,16 @@
+"""
+Assembles and runs the LangGraph workflow. Currently wires
+director -> architect -> END; the frontend/backend/qa/repair loop described
+in the README isn't connected here yet (routing.py's route_after_qa shows
+how that loop would plug in).
+
+Run: `python -m vibecoder.src.graph.graph` from the repo root (needs
+     OPENAI_API_KEY; makes several real LLM calls with structured output).
+
+Learn: StateGraph(WorkflowState), add_node/add_edge, START/END, and
+.compile() + .invoke() to run the whole graph on one input.
+"""
+
 from langgraph.graph import (
     StateGraph,
     START,

@@ -1,3 +1,14 @@
+"""
+Adapters between LangGraph nodes and the plain-Python agent functions in
+src/agents/ — each node pulls what it needs from WorkflowState and returns a
+partial-state update.
+
+Run: not run directly — imported by graph.py.
+
+Learn: the thin "node" pattern — nodes don't contain logic themselves, they
+just wire state in and out of an existing function.
+"""
+
 from vibecoder.src.agents.director import run_director
 from vibecoder.src.agents.architect import run_architect
 

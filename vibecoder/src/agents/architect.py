@@ -1,3 +1,14 @@
+"""
+Second agent: takes the director's ProductSpec + TaskGraph and produces three
+structured design artifacts — BlueprintSpec, SchemaSpec, APIContract.
+
+Run: not run directly — called by src/graph/nodes.py's architect_node.
+
+Learn: calling .with_structured_output() three times against the same
+prompt/context to get three independent typed outputs, and
+model_dump_json() to serialize Pydantic objects into a prompt.
+"""
+
 from pathlib import Path
 
 from vibecoder.src.agents.base import get_llm

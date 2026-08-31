@@ -1,3 +1,14 @@
+"""
+Pydantic schema for the Director agent's first structured output: what the
+user wants built.
+
+Run: not run directly — a data model imported wherever a ProductSpec is
+     produced (director.py) or consumed (architect.py, state.py).
+
+Learn: pydantic.Field(description=...) — descriptions become part of the
+JSON schema the LLM sees when using .with_structured_output(ProductSpec).
+"""
+
 from pydantic import BaseModel, Field
 
 

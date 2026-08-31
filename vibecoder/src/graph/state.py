@@ -1,3 +1,13 @@
+"""
+The one shared state dict threaded through the whole LangGraph workflow —
+every node reads from and writes back into this TypedDict.
+
+Run: not run directly — imported by graph.py and nodes.py.
+
+Learn: LangGraph's TypedDict(total=False) state pattern, where each node
+only needs to return the keys it updates, not the whole state.
+"""
+
 from typing import TypedDict
 
 from vibecoder.src.schemas.product import ProductSpec

@@ -1,3 +1,16 @@
+"""
+Pydantic schemas for the Architect agent's API contract (endpoints) and
+database schema (models + relationships) — the shared source of truth both
+frontend and backend workers build against.
+
+Run: not run directly — imported by architect.py, frontend.py, backend.py,
+     state.py.
+
+Learn: Field(default_factory=dict/list) for optional nested structures, and
+how one schema (APIContract) is deliberately shared by two different
+workers.
+"""
+
 from pydantic import BaseModel, Field
 
 

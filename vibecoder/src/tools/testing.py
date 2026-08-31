@@ -1,3 +1,15 @@
+"""
+Runs the project's pytest suite as a subprocess and turns the result into a
+structured TestReport for the QA agent to reason about.
+
+Run: not run directly — call `run_tests()` yourself to see the TestReport it
+     builds, or trace how agents/qa_repair.py's run_qa() consumes it.
+
+Learn: turning an external command's exit code + stdout/stderr into a typed
+Pydantic result — notice it reports one generic failure rather than parsing
+pytest's real per-test output, a good gap to fix as a self-study exercise.
+"""
+
 import subprocess
 
 from vibecoder.src.schemas.testing import TestReport, TestFailure

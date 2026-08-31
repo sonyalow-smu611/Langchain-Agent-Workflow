@@ -1,3 +1,15 @@
+"""
+Naive full-text search across every file under the sandboxed workspace
+(PROJECT_ROOT) — case-insensitive substring match, returned as
+file/line/content hits.
+
+Run: not run directly — imported wherever an agent needs to find existing
+     code before editing it.
+
+Learn: a simple, dependency-free alternative to embedding-based search when
+you just need exact substring matches over a small local workspace.
+"""
+
 from pathlib import Path
 
 from vibecoder.src.tools.filesystem import PROJECT_ROOT

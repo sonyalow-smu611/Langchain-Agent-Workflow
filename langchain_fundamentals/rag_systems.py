@@ -1,4 +1,18 @@
+"""
+A minimal RAG (Retrieval-Augmented Generation) pipeline over Dracula.txt:
+load -> split -> embed -> store in Chroma -> retrieve -> answer.
+
+Run: `python rag_systems.py` (needs OPENAI_API_KEY; builds
+     db/chroma_db_with_metadata/ on first run and reuses it after).
+
+Learn: TextLoader, CharacterTextSplitter, OpenAIEmbeddings,
+       Chroma.from_documents(), as_retriever(search_type=
+       "similarity_score_threshold"), and manually stuffing retrieved
+       context into a HumanMessage instead of using a chain.
+"""
+
 import os
+from pathlib import Path
 
 from dotenv import load_dotenv
 from langchain.text_splitter import CharacterTextSplitter
@@ -7,7 +21,7 @@ from langchain_community.vectorstores import Chroma
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain.schema import HumanMessage, SystemMessage
 
-load_dotenv()
+load_dotenv(Path(__file__).resolve().parents[1] / ".env")
 
 # Define the directory containing the text files and the persistent directory
 current_dir = os.path.dirname(os.path.abspath(__file__))

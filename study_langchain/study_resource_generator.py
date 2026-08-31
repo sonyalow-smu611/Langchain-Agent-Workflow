@@ -1,4 +1,19 @@
+"""
+Interactive CLI: turns your own .txt notes into a cheatsheet, summary, in-depth
+notes, or quiz — grounded only in documents you drop into documents/.
+
+Run: add .txt files to study_langchain/documents/, then
+     `python study_resource_generator.py` (needs OPENAI_API_KEY in the shared
+     repo-root .env).
+
+Learn: RAG (TextLoader -> CharacterTextSplitter -> Chroma -> similarity
+       retriever), multiple prompt-templated LCEL chains sharing one
+       retriever, routing user input to different chains, and manually
+       formatting chat history into a prompt variable.
+"""
+
 import os
+from pathlib import Path
 
 from dotenv import load_dotenv
 from langchain.prompts import ChatPromptTemplate
@@ -9,7 +24,7 @@ from langchain_community.document_loaders import TextLoader
 from langchain_community.vectorstores import Chroma
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 
-load_dotenv()
+load_dotenv(Path(__file__).resolve().parents[1] / ".env")
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 documents_dir = os.path.join(current_dir, "documents")

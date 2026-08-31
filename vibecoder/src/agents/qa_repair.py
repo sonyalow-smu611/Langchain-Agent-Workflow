@@ -1,3 +1,16 @@
+"""
+QA + repair loop's brain: turns a TestReport into RepairTicket(s) (pure
+Python, no LLM), and separately asks the LLM to produce the smallest fix for
+one ticket.
+
+Run: not run directly — run_qa() would be called after
+     src/tools/testing.py's run_tests(); run_repair() is called per ticket.
+
+Learn: mixing plain deterministic Python (run_qa) with an LLM call
+(run_repair) in the same agent module — not every "agent" step needs a
+model call.
+"""
+
 from pathlib import Path
 
 from vibecoder.src.agents.base import get_llm

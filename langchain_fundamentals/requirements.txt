@@ -1,7 +1,0 @@
-langchain-openai
-dotenv
-langchain_core
-langchain
-langchain-google-firestore
-chromadb
-langchainhub

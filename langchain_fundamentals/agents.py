@@ -1,3 +1,20 @@
+"""
+Classic LangChain ReAct agent: one tool (get_system_time) + a prompt pulled
+from LangChain Hub, run through create_react_agent + AgentExecutor.
+
+Run: `python agents.py` (needs OPENAI_API_KEY, plus internet access since it
+     pulls the ReAct prompt from LangChain Hub at runtime).
+
+Learn: the @tool decorator, hub.pull(), create_react_agent + AgentExecutor,
+       and verbose=True to watch the agent's Thought/Action/Observation loop.
+
+Compare to: langchain_workshop.ipynb section 5, which builds an agent the
+newer, simpler way with langgraph's create_react_agent (no hub, no prompt
+template to write).
+"""
+
+from pathlib import Path
+
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
 from langchain_core.prompts import PromptTemplate
@@ -7,7 +24,7 @@ from langchain.agents import create_react_agent, AgentExecutor
 import datetime
 from langchain.agents import tool
 
-load_dotenv()
+load_dotenv(Path(__file__).resolve().parents[1] / ".env")
 
 @tool
 def get_system_time(format: str = "%Y-%m-%d %H:%M:%S"):

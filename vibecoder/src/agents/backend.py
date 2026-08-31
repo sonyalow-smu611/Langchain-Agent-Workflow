@@ -1,3 +1,15 @@
+"""
+Backend worker agent — the backend counterpart to frontend.py. Given one
+Task + the API contract + DB schema + architecture, implements that backend
+slice.
+
+Run: not run directly — same pattern as frontend.py, just with a schema arg
+     too.
+
+Learn: worker agents share one pattern — invoke with rich JSON context,
+return free-text file changes. Compare directly against frontend.py.
+"""
+
 from pathlib import Path
 
 from vibecoder.src.agents.base import get_llm

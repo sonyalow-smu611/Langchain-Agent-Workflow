@@ -1,0 +1,27 @@
+# Shared dependencies for the whole repo
+# (study_langchain/, langchain_fundamentals/, vibecoder/)
+
+# Core LangChain
+langchain
+langchain-core
+langchain-community
+langchain-openai
+langchainhub
+
+# LangGraph multi-agent workflow (vibecoder)
+langgraph
+
+# Vector store / RAG (study_langchain, langchain_fundamentals)
+chromadb
+
+# Firestore chat history demo (langchain_fundamentals/chat_models.ipynb)
+langchain-google-firestore
+google-cloud-firestore
+
+# Schemas / config (vibecoder)
+pydantic
+python-dotenv
+
+# Testing (vibecoder)
+pytest
+playwright

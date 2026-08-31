@@ -1,3 +1,16 @@
+"""
+First agent in the pipeline: turns a free-text user request into two
+structured Pydantic objects — a ProductSpec and a TaskGraph — using
+.with_structured_output().
+
+Run: not run directly — called by src/graph/nodes.py's director_node, or try
+     it yourself: `run_director("Build a simple todo app")`.
+
+Learn: llm.with_structured_output(SomeModel) to force JSON matching a
+Pydantic schema instead of parsing free text, and loading a system prompt
+from a .md file.
+"""
+
 from pathlib import Path
 
 from vibecoder.src.agents.base import get_llm

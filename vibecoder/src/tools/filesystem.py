@@ -1,3 +1,14 @@
+"""
+Basic workspace file I/O — list/read/write files under a sandboxed
+PROJECT_ROOT ("workspace/"), so agents never touch files outside it.
+
+Run: not run directly — imported wherever an agent needs to read or write
+     generated project files.
+
+Learn: sandboxing file access to one root directory, and
+Path.relative_to() / .rglob("*") for listing files.
+"""
+
 from pathlib import Path
 
 
