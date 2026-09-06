@@ -1,0 +1,6 @@
+.env
+.DS_Store
+__pycache__/
+*.py[cod]
+langchain_fundamentals/db/
+study_langchain/db/

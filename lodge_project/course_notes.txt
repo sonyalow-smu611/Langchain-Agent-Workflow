@@ -1,0 +1,300 @@
+LLM means Large Language Model, which is a computer program trained to work with language.
+A language model tries to predict what text should come next.
+When you type a prompt, the model studies the words and guesses a useful next piece of text.
+The model does not think like a human; it uses learned patterns from training data.
+Machine learning means teaching computers from examples instead of writing every rule by hand.
+A model is the learned system that makes predictions after training.
+Training is the process where the model improves by seeing many examples.
+Data means the examples used for training, such as books, websites, articles, code, and conversations.
+Natural language processing, or NLP, is the field of computers working with human language.
+NLP includes translation, summarizing, answering questions, classifying text, and writing text.
+Early language models used simpler statistics to guess likely words.
+Modern language models use neural networks, which are math systems inspired loosely by brains.
+A neural network has many small units that adjust numbers to learn patterns.
+Deep learning means using neural networks with many layers.
+A layer is one stage of processing inside a neural network.
+Large language models are large because they have many learned numbers called parameters.
+A parameter is a number the model changes during training to store a pattern.
+More parameters can help a model learn more patterns, but they also cost more to train and run.
+Bigger models often need more data, more computers, and more electricity.
+Better data can matter as much as model size.
+A transformer is the main neural network design used by many modern LLMs.
+Transformers became important because they handle long text better than many older designs.
+Transformers can process many words in parallel, which makes training faster.
+The key idea in transformers is attention.
+Attention lets each word look at other words to understand context.
+Context means the surrounding words that change meaning.
+In "bank of a river," context tells us bank means land, not a money place.
+An LLM does not receive raw letters exactly like we see them.
+First, text is split into tokens.
+A token is a small text piece, such as a word, part of a word, punctuation mark, or space pattern.
+Tokenization means breaking text into tokens.
+The word "unbelievable" might become smaller chunks instead of one whole word.
+Tokenizers use a vocabulary, which is the model's list of known token IDs.
+A token ID is a number representing one token.
+Computers work with numbers, so text must become numbers before the model can use it.
+An embedding is a list of numbers that represents the meaning or use of a token.
+Embeddings place related tokens closer together in a mathematical space.
+"Dog" and "puppy" may have more similar embeddings than "dog" and "airplane."
+Embeddings do not store dictionary definitions; they store learned patterns of use.
+A vector is a list of numbers.
+An embedding vector may have hundreds or thousands of numbers.
+Each number in an embedding is a feature, but the features are usually not easy for humans to name.
+Positional information tells the model where each token appears in the sentence.
+Position matters because "dog bites man" and "man bites dog" use the same words but mean different things.
+Positional encoding adds order information to token embeddings.
+The final input embedding combines token meaning and token position.
+A transformer block is one repeated processing unit inside a transformer.
+Many models stack transformer blocks one after another.
+Early blocks may learn simple relationships, while later blocks may learn more complex patterns.
+GPT-style models use decoder-only transformers.
+Decoder-only means the model is built mainly to generate the next token.
+Causal means the model can only use the current and earlier tokens when predicting the next token.
+Causal masking stops the model from cheating by looking at future tokens during training.
+Masking is like covering future answers while the model practices.
+Encoder models are often used for understanding text.
+Decoder models are often used for generating text.
+Encoder-decoder models can be useful for tasks like translation and summarization.
+Attention starts by turning each token embedding into query, key, and value vectors.
+Query, key, and value are often shortened to Q, K, and V.
+A query is like asking, "What information do I need?"
+A key is like a label saying, "What information do I contain?"
+A value is the actual information passed along if attention chooses it.
+The model compares queries and keys to decide which tokens matter to each other.
+A dot product is a math operation that measures how similar two vectors are.
+Higher similarity usually means stronger attention.
+Attention scores say how much focus one token gives to another token.
+Softmax turns raw scores into probabilities that add up to one.
+A probability is a number from 0 to 1 showing how likely something is.
+In attention, probabilities decide how much each value vector contributes.
+Self-attention means tokens in the same text look at each other.
+Multi-head attention means the model runs several attention systems at the same time.
+Each attention head can learn a different type of relationship.
+One head might track nearby grammar, while another tracks a topic across the sentence.
+Heads are combined so the model gets multiple views of the same text.
+Multi-head attention helps the model notice both short-distance and long-distance connections.
+Long-distance connections matter when a word depends on something much earlier.
+In "The keys on the table are missing," the model must connect "keys" with "are."
+After attention, the model uses a feed-forward network.
+A feed-forward network processes each token's information with learned math.
+In transformer notes, this feed-forward part is often called an MLP.
+MLP means multilayer perceptron, a small neural network inside each transformer block.
+Attention shares information between tokens, while the MLP refines each token separately.
+Refining means changing the token's vector to make it more useful for the next layer.
+A linear layer multiplies vectors by learned weights.
+A weight is a parameter that controls how strongly one number affects another.
+A bias is an extra learned number added during a calculation.
+An activation function adds nonlinearity, which helps the model learn complex patterns.
+Nonlinear means the model can learn more than simple straight-line relationships.
+GELU is one activation function used in some transformer MLPs.
+The MLP often expands the vector size and then shrinks it back.
+Expanding gives the model extra room to mix features.
+Shrinking returns the information to the size needed by the next block.
+Residual connections are shortcuts around parts of the network.
+A residual connection adds earlier information back after a layer finishes.
+Shortcuts help very deep models train without losing useful signals.
+Layer normalization keeps numbers in a stable range during training.
+Stable numbers make training smoother and less likely to break.
+Dropout randomly turns off some connections during training.
+Dropout helps stop the model from memorizing too narrowly.
+Overfitting means a model does well on training examples but poorly on new examples.
+Generalization means doing well on new examples, not just memorized ones.
+After all transformer blocks, the model produces logits.
+A logit is a raw score for a possible next token.
+The model has a logit for every token in its vocabulary.
+Softmax turns logits into next-token probabilities.
+The model can pick the most likely token or sample from likely tokens.
+Sampling means choosing from a probability list instead of always picking the top answer.
+Temperature controls how random sampling feels.
+Low temperature makes answers more predictable.
+Low temperature makes answers more steady but sometimes less creative.
+High temperature makes answers more varied and sometimes less reliable.
+Top-k sampling limits choices to the k most likely next tokens.
+If k is 5, the model only chooses among the top five token options.
+Top-p sampling chooses from the smallest group of tokens whose combined probability reaches p.
+Top-p is also called nucleus sampling.
+Sampling settings affect style, creativity, and consistency.
+A prompt is the text you give the model.
+Prompting means writing instructions or examples to guide the model.
+Prompt learning is the idea that tasks can be shaped as text instructions.
+In-context learning means the model uses examples inside the prompt without changing its parameters.
+Few-shot prompting gives the model a few examples before asking it to solve a new case.
+Zero-shot prompting gives no examples, only the task instruction.
+A system message gives high-level instructions about how the assistant should behave.
+A user message is the request from the person using the model.
+An assistant message is the model's reply.
+Chat history helps the model understand the current conversation.
+Memory in a simple app can be a list of earlier messages.
+Pretraining is the first large training stage for many LLMs.
+During pretraining, the model learns general language patterns from huge text collections.
+Self-supervised learning means the data creates its own training labels.
+Next-token prediction is self-supervised because the next token already exists in the text.
+The model hides the future token, guesses it, and compares the guess to the real token.
+Loss is the number that says how wrong the model was.
+Lower loss usually means better predictions on the training task.
+Cross-entropy loss is a common loss for next-token prediction.
+An optimizer updates the model's parameters to reduce loss.
+Backpropagation is the method used to calculate how parameters should change.
+Gradient means the direction a parameter should move to reduce error.
+Training one LLM can require many powerful GPUs.
+A GPU is a computer chip good at doing many math operations at once.
+Parallel training splits work across multiple chips or machines.
+Data parallelism gives different data batches to different machines.
+Model parallelism splits parts of the model across machines.
+Pipeline parallelism runs different model layers on different machines.
+Mixed precision training uses smaller number formats when possible.
+Smaller number formats can save memory and speed up training.
+Checkpoints are saved copies of model progress during training.
+Checkpoints help restart training if something fails.
+Offloading means moving some data or computation away from expensive GPU memory.
+Training data can come from web pages, books, encyclopedias, code, academic text, and conversations.
+Common Crawl is a large public collection of web pages often used in language research.
+Wikipedia is useful because much of it is organized and explanatory.
+Code data helps models learn programming patterns.
+Raw web data is messy and must be cleaned before training.
+Preprocessing means preparing data before the model learns from it.
+Filtering removes very low-quality or harmful text.
+Deduplication removes repeated examples.
+Privacy cleaning tries to remove private personal information.
+Bias cleaning tries to reduce unfair or harmful patterns in the data.
+No cleaning process is perfect because internet-scale data is huge.
+A dataset is a collection of examples used for training or testing.
+A corpus is a large body of text.
+A token count measures dataset size after tokenization.
+Fine-tuning is extra training after pretraining.
+Fine-tuning teaches a general model to behave better for a specific purpose.
+Supervised fine-tuning uses examples with desired answers.
+An instruction dataset contains pairs like "instruction" and "good response."
+Instruction tuning helps the model follow human requests.
+Alignment means shaping a model to better match human values and goals.
+A helpful model gives useful answers for the user's task.
+An honest model avoids making things up when it does not know.
+A harmless model avoids producing dangerous or abusive content.
+RLHF means reinforcement learning from human feedback.
+In RLHF, humans compare or rate model answers.
+A reward model learns which answers humans prefer.
+The LLM is then trained to produce answers that get higher reward scores.
+PPO is one algorithm used in some reinforcement learning training.
+Reinforcement learning means learning by rewards rather than direct correct answers.
+Safety fine-tuning teaches the model to refuse unsafe requests and handle sensitive topics carefully.
+Parameter-efficient tuning updates only a small part of the model.
+PEFT is useful when full fine-tuning is too expensive.
+LoRA is a common PEFT method that adds small trainable matrices to a frozen model.
+A frozen model has parameters that are not changed during tuning.
+Fine-tuning can improve performance but may also create new mistakes.
+Evaluation means testing whether a model works well.
+A benchmark is a standard test used to compare models.
+Static test datasets contain fixed questions and answers.
+Open-domain question answering tests broad knowledge and reasoning.
+Security evaluation checks whether the model can be tricked into unsafe behavior.
+Human evaluation asks people to judge answer quality.
+Automatic evaluation uses metrics or another model to judge outputs.
+Hallucination means the model gives false information that sounds confident.
+Hallucinations happen because the model predicts plausible text, not guaranteed truth.
+Grounding means connecting the answer to reliable source material.
+Retrieval means finding relevant documents before answering.
+RAG means retrieval-augmented generation.
+RAG gives the model extra context from documents so it does not rely only on memory.
+A vector database stores embeddings for search.
+Similarity search finds text chunks whose embeddings are close to the query.
+Chunking means splitting long documents into smaller pieces for retrieval.
+Context window means how much text the model can consider at once.
+Longer context windows allow more text, but they cost more compute.
+Inference means using a trained model to answer a prompt.
+Training changes the model; inference uses the model as it is.
+Deployment means making the model available inside an app or service.
+Latency means how long the user waits for an answer.
+Throughput means how many requests a system can handle.
+Memory scheduling manages limited computer memory while the model runs.
+The KV cache stores attention information from previous tokens during generation.
+KV cache helps generation go faster because past work does not need to be repeated.
+Model compression makes a model smaller or cheaper to run.
+Distillation trains a smaller model to imitate a larger model.
+Pruning removes parts of a model that seem less important.
+Structured pruning removes whole units such as heads, neurons, or layers.
+Unstructured pruning removes individual weights.
+Quantization stores numbers with fewer bits.
+Fewer bits means less memory and faster math, but sometimes lower quality.
+Weight sharing reuses the same parameters in more than one place.
+Low-rank approximation replaces large matrices with smaller pieces.
+These compression methods help run models on cheaper hardware.
+A tradeoff is a choice where improving one thing may make another thing worse.
+Smaller models are cheaper but may be less capable.
+Larger models can be stronger but are slower and more expensive.
+A model architecture is the design of how its layers and calculations are arranged.
+GPT models are examples of decoder-only transformer models.
+BERT-style models are examples of encoder-focused models.
+T5-style models use text-to-text framing for many tasks.
+Multimodal models can work with more than text, such as images, audio, or video.
+A modality is a type of information, like text, image, sound, or video.
+Domain-specific models are tuned for a field such as medicine, law, coding, or finance.
+Domain-specific tuning helps with special vocabulary and task styles.
+Emergent abilities are skills that appear more strongly when models become large enough.
+Reasoning in LLMs means producing steps that seem to solve a problem logically.
+LLM reasoning can be useful but is not always reliable.
+A chain-of-thought is a hidden or visible series of reasoning steps.
+For study notes, it is usually better to ask for concise explanations and checked answers.
+A chatbot is an app that uses a model to hold a conversation.
+The model is only one part of a chatbot.
+A chatbot may also include tools, memory, retrieval, safety filters, and user interface code.
+A tool is a function the model can ask the app to run.
+Tool use lets a model search notes, calculate numbers, save files, or call APIs.
+An agent is a model-driven system that chooses actions and tools to complete a task.
+A simple agent can decide when to search, summarize, plan, or save.
+A subagent can be a smaller chain focused on one job.
+A notes finder subagent searches course material for relevant lines.
+A cheatsheet subagent turns source notes into compact study reminders.
+A study planner subagent turns topics into content tasks and practice tasks.
+Content tasks focus on understanding and memory.
+Practice tasks focus on doing skills and solving problems.
+A good study plan separates what to know from what to do.
+For LLMs, content tasks include learning definitions like token, embedding, attention, and fine-tuning.
+For LLMs, practice tasks include explaining attention, tracing token flow, and comparing training vs inference.
+A beginner should first learn the big picture before formulas.
+The big picture is input text becomes tokens, tokens become vectors, layers process vectors, and output probabilities choose text.
+The model does not store the internet like a folder of pages.
+It stores statistical patterns in parameters.
+Statistical pattern means a repeated relationship found in data.
+A model can answer from patterns but can still be wrong.
+Asking for sources can reduce mistakes when factual accuracy matters.
+Temperature should be low for study answers that need consistency.
+Temperature can be higher for brainstorming examples or creative wording.
+Top-k and top-p are knobs for controlling how wide the model's choices are.
+Attention maps show which tokens influenced each other most.
+An attention map is a table or picture of attention strengths.
+Attention maps can help people inspect model behavior, but they do not explain everything.
+Interpretability means trying to understand what a model is doing inside.
+Visualization tools make invisible model calculations easier to see.
+A transformer visualizer can show tokenization, embeddings, attention, and output probabilities.
+Browser-based demos can run small models locally to teach concepts interactively.
+GPT-2 small is older and weaker than current models, but it is useful for learning transformer basics.
+Model families share ideas even when their sizes and abilities differ.
+Scaling means increasing model size, data size, or compute.
+Scaling can improve performance, but it also raises cost and energy concerns.
+Efficient inference is important because many users may ask questions at the same time.
+Efficient training is important because building huge models is expensive.
+Future LLMs may become more multimodal, more specialized, and cheaper to run.
+Future systems may combine transformers with other architectures for longer or more efficient memory.
+An RNN is an older neural network style that processes sequences step by step.
+Transformers replaced many RNN uses because attention handles parallel processing well.
+Some newer research revisits RNN-like ideas for efficiency.
+Padding adds blank tokens so inputs fit a required size.
+Truncation cuts text when it is too long for the model.
+Padding and truncation can waste computation or remove useful information.
+A beginner mental model: an LLM is an autocomplete system with a huge learned pattern library.
+A better mental model: an LLM predicts tokens using context, learned representations, and many layers of attention.
+Do not treat an LLM as a calculator unless it has a calculator tool.
+Do not treat an LLM as a database unless it has retrieval from trusted data.
+LLMs are strongest when tasks involve language patterns, explanations, drafts, summaries, and transformations.
+LLMs are weaker when exact facts, fresh information, or precise arithmetic are required without tools.
+Good prompts include the task, context, constraints, and desired format.
+Bad prompts are vague and force the model to guess the goal.
+For studying, ask the model to define terms plainly before solving hard problems.
+For practice, ask for problems, attempt them yourself, then ask for feedback.
+Active recall means trying to remember before looking at the answer.
+Spaced repetition means reviewing material over time instead of cramming once.
+Explaining a concept in your own words is a strong way to test understanding.
+For LLMs, be able to explain tokens, embeddings, attention, transformer blocks, pretraining, fine-tuning, and inference.
+For machine learning, be able to explain data, model, parameters, loss, training, evaluation, and generalization.
+The most important safety idea is that useful output is not the same as guaranteed truth.
+The final beginner summary: LLMs learn language patterns from data, use transformers to process context, and generate text by predicting tokens.
