@@ -1,100 +1,143 @@
-# attention mechanism Cheatsheet
+# Source
 
-# Attention Mechanism Cheatsheet
+Model-generated study material because course_notes.txt had no relevant match.
+
+# API calling Cheatsheet
+
+# API Calling Cheatsheet
 
 ## Key Ideas
-- Transformers utilize attention over RNNs for enhanced parallel processing.
-- Attention is the core concept of transformers.
-- Multi-head attention enhances the model's ability to recognize both short and long-range dependencies within text.
+- APIs enable software communication.
+- Commonly used for data retrieval and manipulation.
+- Security and usage limitations are important considerations.
 
 ## Definitions
-- **Attention**: A mechanism that decides how much each value vector contributes to the output, influenced by the similarity between query and key vectors.
-- **Self-Attention**: A process where tokens in the same input sequence attend to each other, allowing the model to understand the relationships within the same context.
-- **Multi-Head Attention**: A technique where multiple attention heads run in parallel, capturing a diverse set of relationships in the input data.
-- **KV Cache**: A storage component that keeps track of attention information from previous tokens during sequence generation, facilitating efficient processing.
+- **API (Application Programming Interface)**: A set of protocols that allow applications to communicate.
+- **Endpoint**: The specific URL for accessing an API function.
+- **HTTP Methods**: Operations used in API calls:
+  - **GET**: Retrieve data.
+  - **POST**: Send data to create a resource.
+  - **PUT**: Update a resource.
+  - **DELETE**: Remove a resource.
+- **Request**: The call made to the API (includes method, endpoint, headers, body).
+- **Response**: Data returned by the API, typically in JSON or XML.
+- **Authentication**: Methods (API keys, OAuth, JWT) to secure API access.
+- **Rate Limits**: Restrictions on the number of requests within a certain timeframe.
 
-## Formulas/Rules
-- **Attention Scores**: Typically calculated using dot product or scaled dot product between query (Q) and key (K) vectors.
-  
-  \[
-  \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
-  \]
-  
-  Where:
-  - \(Q\) = Query vector
-  - \(K\) = Key vector
-  - \(V\) = Value vector
-  - \(d_k\) = Dimension of key vectors (used for scaling)
+## Important Rules
+1. **Know Your Endpoints**: Familiarize yourself with available endpoints.
+2. **Use Correct HTTP Methods**: Match method to operation.
+3. **Handle Errors Gracefully**: Prepare for error responses (e.g., 404, 500).
+4. **Read Documentation**: Refer to API docs for specifics on usage.
 
-- **Weight Contribution**: Higher similarity between query and key leads to a higher contribution of the corresponding value vector in the output.
+## Example API Call Breakdown
+### URL Endpoint
+- Base: `https://api.weatherapi.com/v1/current.json`
+- Key: `?key=YOUR_API_KEY`
+- Query: `&q=London`
+
+### JavaScript Fetch Example
+```javascript
+fetch('https://api.weatherapi.com/v1/current.json?key=YOUR_API_KEY&q=London')
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+```
+
+## Response Format Example
+```json
+{
+    "location": {
+        "name": "London",
+        "country": "UK"
+    },
+    "current": {
+        "temp_c": 15,
+        "condition": {
+            "text": "Partly cloudy"
+        }
+    }
+}
+```
 
 ## Memory Cues
-- **Transformers & Parallelism**: Think of "Transformers" with "wings" representing speed and efficiency in processing (parallelism).
-- **Self-Attention**: Visualize a group discussion where everyone is listening to each other.
-- **Multi-Headed Attention**: Imagine multiple pairs of eyes looking at different perspectives on the same topic.
-- **KV Cache**: Picture a notepad where you jot down previous discussions to avoid repetition and maintain context.
+- **API = Application -> Interaction**: Think of APIs as bridges for software.
+- **GET your data, POST new things**: Remember the actions of HTTP methods by their initials.
 
-## Missing Information
-- Examples of practical applications or scenarios where attention mechanisms are used.
-- Specific cases illustrating the benefits of multi-head attention.
-- More detailed calculations or explanations of the attention score derivation.
+### Conclusion
+Mastering API calls involves construction of requests and interpretation of responses. Familiarize yourself with endpoints, methods, and error handling to effectively utilize APIs.
 
 # Study Plan
 
-### Study Plan for Attention Mechanism
+### Study Plan: API Calling
 
-#### **Session 1: Basics of Attention Mechanism**
-  
-**Content:**
-- **Introduction to Attention:**
-  - Overview of attention and its significance in deep learning.
-  - Explanation of how attention mechanisms replace some functionalities of RNNs.
-  
-- **Key Concepts:**
-  - Explanation of self-attention: how tokens in a sequence look at one another.
-  - Definition of the KV cache and its purpose in storing attention information during generation.
-
-**Practice:**
-1. Define and explain the significance of self-attention in NLP tasks.
-2. Diagram the self-attention mechanism illustrating how input tokens interact.
-3. Describe the purpose of the KV cache with a brief example of its usage in generating sequences.
+**Session 1: Introduction to API Calling**
 
 ---
 
-#### **Session 2: Multi-Head Attention**
+#### Content
 
-**Content:**
-- **Understanding Multi-Head Attention:**
-  - Detailed explanation of multi-head attention: operating multiple attention heads in parallel.
-  - Key advantages of multi-head attention including capturing both short-distance and long-distance dependencies.
+1. **Understanding APIs**
+   - Definition: Application Programming Interface (API)
+   - Purpose: Facilitate communication between software applications
 
-- **Mechanics of Multi-Head Attention:**
-  - Breakdown of the calculations involved: querying, keying, and valuing.
-  - Importance of flexibility and enhanced representational capacity.
+2. **Key Concepts Explained**
+   - **Endpoint**: Specific URLs where API resources can be accessed.
+   - **HTTP Methods**: 
+     - GET: Retrieve data
+     - POST: Send new data
+     - PUT: Update existing data
+     - DELETE: Remove data
+   - **Request and Response**: Structure and formats (JSON/XML)
+   - **Authentication Methods**: API keys, OAuth, JWT
+   - **Rate Limits**: Constraints on the number of API requests
 
-**Practice:**
-1. Create a short analysis on how multi-head attention allows the model to notice different types of relationships in data.
-2. Work through a numerical example showing how multiple attention heads process a simple sequence.
-3. Implement a simple pseudo-code for multi-head attention to solidify understanding of its structure.
+3. **Important Rules for API Usage**
+   - Know your endpoints and their purposes
+   - Use the correct HTTP methods
+   - Handle errors gracefully
+   - Refer to API documentation for specifics
 
----
+4. **Making API Calls**
+   - Walk through a practical example using a weather API
+   - Breakdown of a sample API request and response
 
-#### **Session 3: Attention Probabilities and Applications**
-
-**Content:**
-- **Calculating Attention:**
-  - Explanation of how probabilities are used to determine the contribution of each value vector in the attention mechanism.
-  - Discussion on how similarity scores impact attention weights: stronger similarities leading to higher attention scores.
-
-- **Applications of Attention:**
-  - Overview of real-world applications of attention mechanisms in models like BERT and GPT.
-  - Discussion on the advancements due to attention mechanisms in various NLP tasks.
-
-**Practice:**
-1. Solve sample problems calculating attention scores given a set of query, key, and value vectors.
-2. Analyze how changing the similarity between tokens would affect attention weights and overall model performance.
-3. Write a short essay on the impact of attention mechanisms on recent advancements in NLP technologies, citing specific models.
+5. **Interpreting API Responses**
+   - Common data structures in responses
+   - Error handling based on response codes 
 
 ---
 
-This study plan will provide a structured approach to understanding the attention mechanism, leveraging both content comprehension and practical application.
+#### Practice
+
+1. **API Endpoint Identification**
+   - List five common services (like weather, maps, social media) and identify their main API endpoint.
+
+2. **HTTP Method Exercises**
+   - Given a scenario (e.g., updating a user's profile, retrieving a list of posts), identify which HTTP method should be used and explain why.
+
+3. **Constructing API Requests**
+   - Write a GET request to retrieve data from an imaginary REST API about books using the following endpoint:
+     ```
+     https://api.example.com/v1/books
+     ```
+
+4. **Error Handling Scenarios**
+   - Create different API response scenarios (both success and error states) and write JavaScript code snippets to handle these scenarios effectively.
+
+5. **Mocking API Responses**
+   - Create a sample JSON structure for a response from a movie database API that includes movie title, genre, release year, and rating.
+
+6. **Using Fetch API**
+   - Using the Fetch API, write a JavaScript function that retrieves user information from an API endpoint provided below (replace with a valid endpoint):
+     ```javascript
+     https://api.example.com/v1/users
+     ```
+
+---
+
+This study plan provides a comprehensive introduction to API calling, focusing on foundational concepts, practical exercises, and hands-on coding tasks to enhance understanding and skills in the subject. Make sure to thoroughly engage with each content section, and tackle the practice tasks diligently for optimal learning outcomes.
