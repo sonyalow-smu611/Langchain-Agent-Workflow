@@ -6,12 +6,18 @@ frontend and backend workers build against.
 Run: not run directly — imported by architect.py, frontend.py, backend.py,
      state.py.
 
-Learn: Field(default_factory=dict/list) for optional nested structures, and
-how one schema (APIContract) is deliberately shared by two different
-workers.
+Learn: Field(default_factory=list) for optional nested structures, why
+name/type pairs are a list of FieldSpec rather than a free-form dict
+(OpenAI structured output rejects schemas with arbitrary keys), and how one
+schema (APIContract) is deliberately shared by two different workers.
 """
 
 from pydantic import BaseModel, Field
+
+
+class FieldSpec(BaseModel):
+    name: str
+    type: str
 
 
 class APIEndpoint(BaseModel):
@@ -19,8 +25,8 @@ class APIEndpoint(BaseModel):
     path: str
     description: str
 
-    request_schema: dict = Field(default_factory=dict)
-    response_schema: dict = Field(default_factory=dict)
+    request_schema: list[FieldSpec] = Field(default_factory=list)
+    response_schema: list[FieldSpec] = Field(default_factory=list)
 
 
 class APIContract(BaseModel):
@@ -31,7 +37,7 @@ class APIContract(BaseModel):
 
 class DatabaseModel(BaseModel):
     name: str
-    fields: dict[str, str]
+    fields: list[FieldSpec]
     relationships: list[str] = Field(default_factory=list)
 
 

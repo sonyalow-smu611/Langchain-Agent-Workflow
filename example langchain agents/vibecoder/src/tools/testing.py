@@ -11,6 +11,7 @@ pytest's real per-test output, a good gap to fix as a self-study exercise.
 """
 
 import subprocess
+import sys
 
 from vibecoder.src.schemas.testing import TestReport, TestFailure
 
@@ -21,7 +22,7 @@ def run_tests() -> TestReport:
     """
 
     result = subprocess.run(
-        ["pytest"],
+        [sys.executable, "-m", "pytest"],
         capture_output=True,
         text=True
     )

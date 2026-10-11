@@ -11,9 +11,7 @@ Learn: mixing plain deterministic Python (run_qa) with an LLM call
 model call.
 """
 
-from pathlib import Path
-
-from vibecoder.src.agents.base import get_llm
+from vibecoder.src.agents.base import get_llm, load_prompt
 from vibecoder.src.schemas.testing import RepairTicket
 
 
@@ -57,9 +55,9 @@ def run_repair(
 
     llm = get_llm()
 
-    prompt = Path(
-        "src/prompts/qa_repair.md"
-    ).read_text()
+    prompt = load_prompt(
+        "qa_repair.md"
+    )
 
     response = llm.invoke([
         ("system", prompt),

@@ -10,9 +10,7 @@ Learn: worker agents share one pattern — invoke with rich JSON context,
 return free-text file changes. Compare directly against frontend.py.
 """
 
-from pathlib import Path
-
-from vibecoder.src.agents.base import get_llm
+from vibecoder.src.agents.base import get_llm, load_prompt
 
 
 def run_backend_worker(
@@ -24,9 +22,9 @@ def run_backend_worker(
 
     llm = get_llm()
 
-    prompt = Path(
-        "src/prompts/backend.md"
-    ).read_text()
+    prompt = load_prompt(
+        "backend.md"
+    )
 
     response = llm.invoke([
         ("system", prompt),

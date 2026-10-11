@@ -5,8 +5,8 @@ Run: not run directly — imported as
      `from vibecoder.src.agents.base import get_llm`.
 
 Learn: centralizing model config (name via MODEL_NAME env var, temperature)
-in one place so every agent stays consistent, and loading the shared
-repo-root .env from deep inside a package via
+in one place so every agent stays consistent, and loading the vibecoder
+folder's .env from deep inside a package via
 Path(__file__).resolve().parents[N].
 """
 
@@ -16,7 +16,16 @@ from pathlib import Path
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 
-load_dotenv(Path(__file__).resolve().parents[3] / ".env")
+VIBECODER_ROOT = Path(__file__).resolve().parents[2]
+PROMPT_DIR = VIBECODER_ROOT / "src" / "prompts"
+
+load_dotenv(VIBECODER_ROOT / ".env")
+
+
+def load_prompt(name: str) -> str:
+    """Read a system prompt by file name, whatever the current directory is."""
+
+    return (PROMPT_DIR / name).read_text()
 
 
 def get_llm():

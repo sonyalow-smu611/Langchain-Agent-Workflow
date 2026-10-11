@@ -9,9 +9,7 @@ prompt/context to get three independent typed outputs, and
 model_dump_json() to serialize Pydantic objects into a prompt.
 """
 
-from pathlib import Path
-
-from vibecoder.src.agents.base import get_llm
+from vibecoder.src.agents.base import get_llm, load_prompt
 from vibecoder.src.schemas.architecture import BlueprintSpec
 from vibecoder.src.schemas.contracts import APIContract, SchemaSpec
 
@@ -35,9 +33,9 @@ def run_architect(
         APIContract
     )
 
-    prompt = Path(
-        "src/prompts/architect.md"
-    ).read_text()
+    prompt = load_prompt(
+        "architect.md"
+    )
 
     context = f"""
     Product specification:

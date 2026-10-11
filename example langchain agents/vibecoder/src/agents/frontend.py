@@ -11,9 +11,7 @@ Learn: a plain llm.invoke() (no structured output) is used here instead of
 not JSON.
 """
 
-from pathlib import Path
-
-from vibecoder.src.agents.base import get_llm
+from vibecoder.src.agents.base import get_llm, load_prompt
 
 
 def run_frontend_worker(
@@ -24,9 +22,9 @@ def run_frontend_worker(
 
     llm = get_llm()
 
-    prompt = Path(
-        "src/prompts/frontend.md"
-    ).read_text()
+    prompt = load_prompt(
+        "frontend.md"
+    )
 
     response = llm.invoke([
         ("system", prompt),

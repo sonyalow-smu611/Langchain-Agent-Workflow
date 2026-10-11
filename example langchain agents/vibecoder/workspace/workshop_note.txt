@@ -1,0 +1,1 @@
+Vibecoder tools can write workspace files.

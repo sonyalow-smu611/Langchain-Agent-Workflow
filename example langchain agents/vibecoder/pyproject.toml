@@ -18,3 +18,11 @@ dependencies = [
 pythonpath = [
     ".."
 ]
+# A bare `pytest` (what qa_node runs) stays on the fast unit tests.
+# Run the end-to-end tests explicitly with: pytest e2e
+testpaths = [
+    "tests"
+]
+markers = [
+    "live: makes real OpenAI calls using OPENAI_API_KEY from .env",
+]

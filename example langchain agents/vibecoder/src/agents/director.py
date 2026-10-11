@@ -11,9 +11,7 @@ Pydantic schema instead of parsing free text, and loading a system prompt
 from a .md file.
 """
 
-from pathlib import Path
-
-from vibecoder.src.agents.base import get_llm
+from vibecoder.src.agents.base import get_llm, load_prompt
 from vibecoder.src.schemas.product import ProductSpec
 from vibecoder.src.schemas.tasks import TaskGraph
 
@@ -30,9 +28,9 @@ def build_director():
         TaskGraph
     )
 
-    prompt = Path(
-        "src/prompts/director.md"
-    ).read_text()
+    prompt = load_prompt(
+        "director.md"
+    )
 
     return product_model, task_model, prompt
 
