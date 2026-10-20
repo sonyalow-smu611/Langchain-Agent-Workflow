@@ -2,32 +2,37 @@
 Interactive CLI: turns your own .txt notes into a cheatsheet, summary, in-depth
 notes, or quiz — grounded only in documents you drop into documents/.
 
-Run: add .txt files to study_langchain/documents/, then
-     `python study_resource_generator.py` (needs OPENAI_API_KEY in the shared
-     repo-root .env).
+Run: add .txt files to study_langchain/documents/ (a sample is included),
+     then `python study_resource_generator.py`. Needs OPENAI_API_KEY in
+     study_langchain/.env.
 
-Learn: RAG (TextLoader -> CharacterTextSplitter -> Chroma -> similarity
-       retriever), multiple prompt-templated LCEL chains sharing one
+Learn: RAG (UTF-8 text files -> CharacterTextSplitter -> Chroma with cosine
+       distance -> similarity-threshold retriever), multiple prompt-templated LCEL chains sharing one
        retriever, routing user input to different chains, and manually
        formatting chat history into a prompt variable.
 """
 
 import os
+import uuid
 from pathlib import Path
 
 from dotenv import load_dotenv
-from langchain.prompts import ChatPromptTemplate
-from langchain.schema import AIMessage, HumanMessage, SystemMessage
-from langchain.schema.output_parser import StrOutputParser
-from langchain.text_splitter import CharacterTextSplitter
-from langchain_community.document_loaders import TextLoader
-from langchain_community.vectorstores import Chroma
+from langchain_chroma import Chroma
+from langchain_core.documents import Document
+from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_text_splitters import CharacterTextSplitter
 
-load_dotenv(Path(__file__).resolve().parents[1] / ".env")
+ENV_PATH = Path(__file__).resolve().parent / ".env"
+load_dotenv(ENV_PATH)
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 documents_dir = os.path.join(current_dir, "documents")
+
+# retrieve_context() returns this when no chunk clears the relevance threshold.
+NO_CONTEXT = "No relevant study context was found."
 
 
 def create_study_agents():
@@ -164,8 +169,8 @@ def load_study_documents():
     Load all local .txt files that the RAG system should search over.
 
     The function creates the documents folder if it does not exist, reads each
-    text file with TextLoader, and stores the file name in metadata so generated
-    answers can show which source chunk they used.
+    text file as UTF-8 into a LangChain Document, and stores the file name in
+    metadata so generated answers can show which source chunk they used.
     """
     os.makedirs(documents_dir, exist_ok=True)
 
@@ -177,13 +182,12 @@ def load_study_documents():
     documents = []
     for text_file in text_files:
         file_path = os.path.join(documents_dir, text_file)
-        loader = TextLoader(file_path)
-        loaded_docs = loader.load()
+
+        # Read as UTF-8 explicitly so accents and symbols load on every OS.
+        content = Path(file_path).read_text(encoding="utf-8")
 
         # Keep the original file name attached to each loaded document.
-        for doc in loaded_docs:
-            doc.metadata = {"source": text_file}
-            documents.append(doc)
+        documents.append(Document(page_content=content, metadata={"source": text_file}))
 
     return documents
 
@@ -202,7 +206,18 @@ def create_retriever(documents):
 
     # Embeddings convert text chunks into vectors that Chroma can compare.
     embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
-    db = Chroma.from_documents(docs, embeddings)
+
+    # Cosine distance makes each relevance score the cosine similarity. Chroma's
+    # default L2 distance scored short on-topic queries like "limiting factors"
+    # below the 0.2 threshold, so they retrieved nothing.
+    # The in-memory Chroma client is shared across a process, so a unique
+    # collection name keeps every build from reusing an older one.
+    db = Chroma.from_documents(
+        docs,
+        embeddings,
+        collection_name=f"study-{uuid.uuid4().hex}",
+        collection_metadata={"hnsw:space": "cosine"},
+    )
 
     # The threshold filters out weak matches instead of sending every result.
     return db.as_retriever(
@@ -250,7 +265,7 @@ def retrieve_context(retriever, focus):
     relevant_docs = retriever.invoke(focus)
 
     if not relevant_docs:
-        return "No relevant study context was found."
+        return NO_CONTEXT
 
     # Join chunks with spacing so the model can read them as separate sources.
     return "\n\n".join(
@@ -308,6 +323,13 @@ def run_chat():
     This loads study files, builds the retriever and chains, then repeatedly
     asks the user what to generate and what topic to focus on until they exit.
     """
+    # Fail fast with a fix the user can act on, instead of an OpenAI traceback.
+    if not os.getenv("OPENAI_API_KEY"):
+        raise SystemExit(
+            f"OPENAI_API_KEY is not set. Add it to {ENV_PATH} "
+            "(copy .env.example to get started)."
+        )
+
     # Documents must exist before we spend time creating embeddings or chains.
     documents = load_study_documents()
     if not documents:
@@ -331,7 +353,12 @@ def run_chat():
 
     while True:
         print_menu()
-        choice = input("\nYour choice: ")
+
+        # Closed input (Ctrl-D or the end of piped input) counts as exit.
+        try:
+            choice = input("\nYour choice: ")
+        except EOFError:
+            break
 
         if choice.lower().strip() == "exit":
             break
@@ -344,17 +371,29 @@ def run_chat():
             )
             continue
 
-        focus = input("Enter the topic, chapter, or question to focus on: ")
+        try:
+            focus = input("Enter the topic, chapter, or question to focus on: ")
+        except EOFError:
+            break
         if not focus.strip():
             print("Please enter a topic, chapter, or question.")
+            continue
+
+        # Retrieve relevant chunks first. With nothing to ground the answer in,
+        # tell the user directly instead of asking the model to guess.
+        context = retrieve_context(retriever, focus)
+        if context == NO_CONTEXT:
+            print(
+                f"No notes in {documents_dir} matched '{focus}'. "
+                "Try a different topic, or add notes that cover it."
+            )
             continue
 
         # Store the user's request before invoking the selected chain.
         human_message = f"Generate {agent_name} for: {focus}"
         chat_history.append(HumanMessage(content=human_message))
 
-        # Retrieve relevant chunks, then pass them into the chosen prompt chain.
-        context = retrieve_context(retriever, focus)
+        # Pass the retrieved chunks into the chosen prompt chain.
         response = agent_chain.invoke(
             {
                 "chat_history": format_chat_history(chat_history),
